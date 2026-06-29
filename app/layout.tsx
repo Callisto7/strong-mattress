@@ -10,8 +10,6 @@ import '@mantine/core/styles.css';
 import '@mantine/carousel/styles.css';
 import './globals.css';
 
-import { SpeedInsights } from '@vercel/speed-insights/next';
-
 import { theme } from './theme';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
@@ -61,7 +59,6 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
         </MantineProvider>
-        <SpeedInsights />
       </body>
     </html>
   );
