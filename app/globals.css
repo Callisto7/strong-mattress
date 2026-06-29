@@ -1,0 +1,98 @@
+:root {
+  --section-bg: #f3f3f1;
+  --border-color: #e3e3e0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: #ffffff;
+  color: #1a1a1a;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.section-muted {
+  background: var(--section-bg);
+}
+
+/* Horizontal scroll steps (Motion) */
+.scroll-steps-track {
+  position: relative;
+}
+
+.scroll-steps-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: visible;
+}
+
+.scroll-steps-gallery {
+  display: flex;
+  gap: 30px;
+  will-change: transform;
+}
+
+.scroll-steps-item {
+  flex-shrink: 0;
+  width: 400px;
+  height: 500px;
+  border-radius: var(--mantine-radius-lg);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+@media (max-width: 600px) {
+  .scroll-steps-sticky {
+    width: 280px;
+  }
+
+  .scroll-steps-gallery {
+    gap: 15px;
+  }
+
+  .scroll-steps-item {
+    width: 280px;
+    height: 420px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-steps-gallery {
+    transform: none !important;
+  }
+
+  .scroll-steps-track {
+    height: auto !important;
+  }
+
+  .scroll-steps-sticky {
+    position: relative;
+    height: auto;
+    width: 100%;
+    overflow-x: auto;
+    padding: 40px 0;
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "strong-mattress",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@mantine/carousel": "^7.15.3",
+    "@mantine/core": "^7.15.3",
+    "@mantine/form": "^7.15.3",
+    "@mantine/hooks": "^7.15.3",
+    "@tabler/icons-react": "^3.26.0",
+    "embla-carousel-react": "^8.5.1",
+    "motion": "^12.42.0",
+    "next": "^15.1.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.10",
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^15.1.6",
+    "postcss": "^8.4.49",
+    "postcss-preset-mantine": "^1.17.0",
+    "postcss-simple-vars": "^7.0.1",
+    "typescript": "^5.7.2"
+  }
+}
