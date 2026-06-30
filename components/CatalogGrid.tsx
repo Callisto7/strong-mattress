@@ -5,130 +5,27 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { AnimatePresence, motion } from 'motion/react';
 import {
+  ActionIcon,
   Badge,
   Box,
   Button,
   Card,
   Group,
+  Modal,
   Rating,
   SimpleGrid,
   Stack,
+  Table,
   Text,
   UnstyledButton,
 } from '@mantine/core';
-
-type Firmness = 'Мягкая' | 'Средняя' | 'Жёсткая';
-
-type Product = {
-  id: string;
-  name: string;
-  image: string;
-  type: string;
-  height: number;
-  firmness: Firmness;
-  price: number;
-  oldPrice?: number;
-  rating: number;
-  reviews: number;
-  badge?: string;
-};
-
-// Демо-данные: типы, диапазоны цен и высоты ориентированы на реальный
-// рынок (matras-city.ru). Названия и фото — собственные.
-const products: Product[] = [
-  {
-    id: 'eko-lite',
-    name: 'Strong Эко Лайт',
-    image: '/images/mattress-3.jpg',
-    type: 'Беспружинный',
-    height: 18,
-    firmness: 'Средняя',
-    price: 9990,
-    rating: 4.6,
-    reviews: 96,
-  },
-  {
-    id: 'komfort',
-    name: 'Strong Комфорт',
-    image: '/images/mattress-1.jpg',
-    type: 'Беспружинный',
-    height: 21,
-    firmness: 'Средняя',
-    price: 12490,
-    rating: 4.7,
-    reviews: 128,
-  },
-  {
-    id: 'komfort-bio',
-    name: 'Strong Комфорт Био',
-    image: '/images/mattress-6.jpg',
-    type: 'Независимый блок',
-    height: 20,
-    firmness: 'Жёсткая',
-    price: 14490,
-    rating: 4.7,
-    reviews: 154,
-  },
-  {
-    id: 'energy',
-    name: 'Strong Энерджи',
-    image: '/images/mattress-2.jpg',
-    type: 'Независимый блок',
-    height: 22,
-    firmness: 'Средняя',
-    price: 20020,
-    rating: 4.9,
-    reviews: 342,
-    badge: 'Хит',
-  },
-  {
-    id: 'kokos',
-    name: 'Strong Кокос',
-    image: '/images/mattress-5.jpg',
-    type: 'Беспружинный · кокос',
-    height: 20,
-    firmness: 'Жёсткая',
-    price: 23270,
-    rating: 4.7,
-    reviews: 187,
-  },
-  {
-    id: 'dream',
-    name: 'Strong Дрим',
-    image: '/images/mattress-4.jpg',
-    type: 'Память формы',
-    height: 24,
-    firmness: 'Мягкая',
-    price: 31340,
-    rating: 4.9,
-    reviews: 264,
-    badge: 'Новинка',
-  },
-  {
-    id: 'premium',
-    name: 'Strong Премиум',
-    image: '/images/mattress-7.jpg',
-    type: 'Независимый блок · латекс',
-    height: 26,
-    firmness: 'Средняя',
-    price: 34900,
-    oldPrice: 40010,
-    rating: 4.9,
-    reviews: 401,
-    badge: '−13%',
-  },
-  {
-    id: 'kids',
-    name: 'Strong Кидс',
-    image: '/images/mattress-8.jpg',
-    type: 'Беспружинный · детский',
-    height: 16,
-    firmness: 'Средняя',
-    price: 8750,
-    rating: 4.8,
-    reviews: 73,
-  },
-];
+import { useDisclosure } from '@mantine/hooks';
+import { IconArrowsDiff, IconCheck, IconX } from '@tabler/icons-react';
+import {
+  products,
+  formatPrice,
+  type Firmness,
+} from './products';
 
 const filters: Array<'Все' | Firmness> = [
   'Все',
@@ -137,14 +34,41 @@ const filters: Array<'Все' | Firmness> = [
   'Жёсткая',
 ];
 
-const formatPrice = (n: number) => `${n.toLocaleString('ru-RU')} ₽`;
+const MAX_COMPARE = 4;
 
 export function CatalogGrid() {
   const [active, setActive] = useState<(typeof filters)[number]>('Все');
+  const [compare, setCompare] = useState<string[]>([]);
+  const [opened, { open, close }] = useDisclosure(false);
 
   const shown = products.filter(
     (p) => active === 'Все' || p.firmness === active,
   );
+  const compareProducts = products.filter((p) => compare.includes(p.id));
+
+  const toggleCompare = (id: string) =>
+    setCompare((c) =>
+      c.includes(id)
+        ? c.filter((x) => x !== id)
+        : c.length >= MAX_COMPARE
+          ? c
+          : [...c, id],
+    );
+
+  const rows: { label: string; render: (p: (typeof products)[number]) => React.ReactNode }[] = [
+    { label: 'Цена', render: (p) => <Text fw={800}>{formatPrice(p.price)}</Text> },
+    { label: 'Тип', render: (p) => <Text fz="sm">{p.type}</Text> },
+    { label: 'Высота', render: (p) => <Text fz="sm">{p.height} см</Text> },
+    { label: 'Жёсткость', render: (p) => <Text fz="sm">{p.firmness}</Text> },
+    {
+      label: 'Рейтинг',
+      render: (p) => (
+        <Text fz="sm">
+          {p.rating} • {p.reviews}
+        </Text>
+      ),
+    },
+  ];
 
   return (
     <Stack gap="xl">
@@ -177,100 +101,256 @@ export function CatalogGrid() {
 
       <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="lg">
         <AnimatePresence mode="popLayout">
-          {shown.map((p) => (
-            <motion.div
-              key={p.id}
-              layout
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              style={{ height: '100%' }}
-            >
-              <Card
-                className="hover-card"
-                radius="lg"
-                withBorder
-                p={0}
-                h="100%"
-                style={{ overflow: 'hidden', display: 'flex' }}
+          {shown.map((p) => {
+            const selected = compare.includes(p.id);
+            return (
+              <motion.div
+                key={p.id}
+                layout
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                style={{ height: '100%' }}
               >
-                <Box
-                  className="zoom-img"
-                  style={{ position: 'relative', height: 220 }}
+                <Card
+                  className="hover-card"
+                  radius="lg"
+                  withBorder
+                  p={0}
+                  h="100%"
+                  style={{ overflow: 'hidden', display: 'flex' }}
                 >
-                  <Image
-                    src={p.image}
-                    alt={p.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    style={{ objectFit: 'cover' }}
-                  />
-                  {p.badge && (
-                    <Badge
-                      color="brand.7"
-                      radius="sm"
-                      style={{ position: 'absolute', top: 12, left: 12 }}
-                    >
-                      {p.badge}
-                    </Badge>
-                  )}
-                </Box>
-
-                <Stack p="lg" gap="sm" style={{ flex: 1 }}>
-                  <Group justify="space-between" align="flex-start" wrap="nowrap">
-                    <div>
-                      <Text fz="lg" fw={700}>
-                        {p.name}
-                      </Text>
-                      <Text fz="xs" c="dimmed" mt={2}>
-                        {p.type} · {p.height} см
-                      </Text>
-                    </div>
-                    <Badge variant="light" color="gray" radius="sm">
-                      {p.firmness}
-                    </Badge>
-                  </Group>
-
-                  <Group gap="xs">
-                    <Rating value={p.rating} fractions={2} readOnly size="xs" />
-                    <Text fz="xs" c="dimmed">
-                      {p.rating} • {p.reviews} отзывов
-                    </Text>
-                  </Group>
-
-                  <Group
-                    justify="space-between"
-                    align="flex-end"
-                    mt="auto"
-                    wrap="nowrap"
+                  <Box
+                    className="zoom-img"
+                    style={{ position: 'relative', height: 220 }}
                   >
-                    <div>
+                    <Image
+                      src={p.image}
+                      alt={p.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      style={{ objectFit: 'cover' }}
+                    />
+                    {p.badge && (
+                      <Badge
+                        color="brand.7"
+                        radius="sm"
+                        style={{ position: 'absolute', top: 12, left: 12 }}
+                      >
+                        {p.badge}
+                      </Badge>
+                    )}
+                    <ActionIcon
+                      onClick={() => toggleCompare(p.id)}
+                      variant={selected ? 'filled' : 'white'}
+                      color={selected ? 'brand.7' : 'dark'}
+                      radius="md"
+                      size="lg"
+                      aria-label={selected ? 'Убрать из сравнения' : 'Добавить к сравнению'}
+                      style={{ position: 'absolute', top: 12, right: 12 }}
+                    >
+                      {selected ? <IconCheck size={18} /> : <IconArrowsDiff size={18} />}
+                    </ActionIcon>
+                  </Box>
+
+                  <Stack p="lg" gap="sm" style={{ flex: 1 }}>
+                    <Group justify="space-between" align="flex-start" wrap="nowrap">
+                      <div>
+                        <Text fz="lg" fw={700}>
+                          {p.name}
+                        </Text>
+                        <Text fz="xs" c="dimmed" mt={2}>
+                          {p.type} · {p.height} см
+                        </Text>
+                      </div>
+                      <Badge variant="light" color="gray" radius="sm">
+                        {p.firmness}
+                      </Badge>
+                    </Group>
+
+                    <Group gap="xs">
+                      <Rating value={p.rating} fractions={2} readOnly size="xs" />
+                      <Text fz="xs" c="dimmed">
+                        {p.rating} • {p.reviews} отзывов
+                      </Text>
+                    </Group>
+
+                    <div style={{ marginTop: 'auto' }}>
                       {p.oldPrice && (
                         <Text fz="xs" c="dimmed" td="line-through">
                           {formatPrice(p.oldPrice)}
                         </Text>
                       )}
-                      <Text fz="xl" fw={800} lh={1.1}>
+                      <Text fz="xl" fw={800} lh={1.1} mb="sm">
                         {formatPrice(p.price)}
                       </Text>
+                      <Group gap="xs" grow>
+                        <Button
+                          variant={selected ? 'filled' : 'light'}
+                          color={selected ? 'brand.7' : 'gray'}
+                          radius="md"
+                          onClick={() => toggleCompare(p.id)}
+                          leftSection={<IconArrowsDiff size={16} />}
+                        >
+                          {selected ? 'В сравнении' : 'Сравнить'}
+                        </Button>
+                        <Button
+                          component={Link}
+                          href="/product"
+                          variant="light"
+                          color="dark"
+                          radius="md"
+                        >
+                          Подробнее
+                        </Button>
+                      </Group>
                     </div>
+                  </Stack>
+                </Card>
+              </motion.div>
+            );
+          })}
+        </AnimatePresence>
+      </SimpleGrid>
+
+      {/* Плавающая панель сравнения */}
+      <AnimatePresence>
+        {compare.length > 0 && (
+          <motion.div
+            initial={{ y: 80, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 80, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              position: 'fixed',
+              left: '50%',
+              bottom: 24,
+              transform: 'translateX(-50%)',
+              zIndex: 200,
+            }}
+          >
+            <Group
+              gap="md"
+              wrap="nowrap"
+              px="lg"
+              py="sm"
+              style={{
+                background: 'rgba(20, 24, 22, 0.82)',
+                backdropFilter: 'blur(16px) saturate(160%)',
+                WebkitBackdropFilter: 'blur(16px) saturate(160%)',
+                borderRadius: 999,
+                border: '1px solid rgba(255,255,255,0.16)',
+                boxShadow: '0 18px 50px -16px rgba(0,0,0,0.55)',
+                color: '#fff',
+              }}
+            >
+              <Text fz="sm" fw={600} c="white" style={{ whiteSpace: 'nowrap' }}>
+                Выбрано {compare.length} из {MAX_COMPARE}
+              </Text>
+              <Button
+                size="sm"
+                radius="xl"
+                onClick={open}
+                disabled={compare.length < 2}
+              >
+                Сравнить
+              </Button>
+              <ActionIcon
+                variant="subtle"
+                color="gray.3"
+                radius="xl"
+                onClick={() => setCompare([])}
+                aria-label="Очистить сравнение"
+              >
+                <IconX size={18} />
+              </ActionIcon>
+            </Group>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Модалка сравнения */}
+      <Modal
+        opened={opened}
+        onClose={close}
+        size="auto"
+        radius="lg"
+        title={
+          <Text fw={700} fz="lg">
+            Сравнение матрасов
+          </Text>
+        }
+        centered
+      >
+        <Table.ScrollContainer minWidth={320 + compareProducts.length * 200}>
+          <Table verticalSpacing="md" horizontalSpacing="lg">
+            <Table.Thead>
+              <Table.Tr>
+                <Table.Th />
+                {compareProducts.map((p) => (
+                  <Table.Th key={p.id} style={{ minWidth: 180 }}>
+                    <Stack gap={8} align="center">
+                      <Box
+                        style={{
+                          position: 'relative',
+                          width: '100%',
+                          height: 110,
+                          borderRadius: 'var(--mantine-radius-md)',
+                          overflow: 'hidden',
+                        }}
+                      >
+                        <Image
+                          src={p.image}
+                          alt={p.name}
+                          fill
+                          sizes="180px"
+                          style={{ objectFit: 'cover' }}
+                        />
+                      </Box>
+                      <Text fw={700} ta="center">
+                        {p.name}
+                      </Text>
+                    </Stack>
+                  </Table.Th>
+                ))}
+              </Table.Tr>
+            </Table.Thead>
+            <Table.Tbody>
+              {rows.map((r) => (
+                <Table.Tr key={r.label}>
+                  <Table.Td>
+                    <Text fz="sm" c="dimmed">
+                      {r.label}
+                    </Text>
+                  </Table.Td>
+                  {compareProducts.map((p) => (
+                    <Table.Td key={p.id} style={{ textAlign: 'center' }}>
+                      {r.render(p)}
+                    </Table.Td>
+                  ))}
+                </Table.Tr>
+              ))}
+              <Table.Tr>
+                <Table.Td />
+                {compareProducts.map((p) => (
+                  <Table.Td key={p.id}>
                     <Button
                       component={Link}
                       href="/product"
-                      variant="light"
-                      color="dark"
+                      fullWidth
                       radius="md"
+                      onClick={close}
                     >
                       Подробнее
                     </Button>
-                  </Group>
-                </Stack>
-              </Card>
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </SimpleGrid>
+                  </Table.Td>
+                ))}
+              </Table.Tr>
+            </Table.Tbody>
+          </Table>
+        </Table.ScrollContainer>
+      </Modal>
     </Stack>
   );
 }

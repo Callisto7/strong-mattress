@@ -13,6 +13,7 @@ import {
 import Image from 'next/image';
 import { IconMail, IconPhone, IconMapPin } from '@tabler/icons-react';
 import { Tagline } from '@/components/Tagline';
+import { PageHero } from '@/components/PageHero';
 import { ContactForm } from '@/components/ContactForm';
 
 export const metadata = {
@@ -66,18 +67,14 @@ function ContactList() {
 export default function ContactsPage() {
   return (
     <>
-      {/* HERO */}
-      <Box style={{ background: '#8a8a8a', color: '#fff' }}>
-        <Container py={{ base: 64, md: 110 }}>
-          <Stack gap="lg" maw={620}>
-            <Title order={1}>Мы здесь для вас</Title>
-            <Text fz="md" style={{ opacity: 0.92 }}>
-              Свяжитесь с нами — мы всегда на связи и готовы помочь с выбором
-              матраса Strong
-            </Text>
-          </Stack>
-        </Container>
-      </Box>
+      {/* HERO / БАННЕР */}
+      <PageHero
+        image="/images/mattress-2.jpg"
+        alt="Шоурум матрасов Strong"
+        tagline="Контакты"
+        title="Мы здесь для вас"
+        text="Свяжитесь с нами — мы всегда на связи и готовы помочь с выбором матраса Strong"
+      />
 
       {/* КОНТАКТНАЯ ИНФОРМАЦИЯ */}
       <Container py={{ base: 56, md: 96 }}>
