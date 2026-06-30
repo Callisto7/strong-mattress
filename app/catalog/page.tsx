@@ -18,7 +18,7 @@ import {
 import { Tagline } from '@/components/Tagline';
 import { Reveal } from '@/components/Reveal';
 import { CatalogGrid } from '@/components/CatalogGrid';
-import { PricingSection } from '@/components/PricingSection';
+import { MattressComparison } from '@/components/MattressComparison';
 
 export const metadata = {
   title: 'Каталог матрасов — Strong',
@@ -57,10 +57,10 @@ export default function CatalogPage() {
         <CatalogGrid />
       </Container>
 
-      {/* СРАВНЕНИЕ */}
+      {/* СРАВНЕНИЕ МАТРАСОВ */}
       <Box component="section" className="section-muted">
         <Container py={{ base: 56, md: 96 }}>
-          <PricingSection />
+          <MattressComparison />
         </Container>
       </Box>
 

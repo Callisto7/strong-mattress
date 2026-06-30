@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Box,
   Button,
@@ -19,7 +20,6 @@ import {
   IconHeartHandshake,
 } from '@tabler/icons-react';
 import { Tagline } from '@/components/Tagline';
-import { Placeholder } from '@/components/Placeholder';
 
 export const metadata = {
   title: 'О нас — Strong',
@@ -135,7 +135,23 @@ export default function AboutPage() {
             </Stack>
           </GridCol>
           <GridCol span={{ base: 12, md: 6 }}>
-            <Placeholder h={520} />
+            <Box
+              className="zoom-img"
+              style={{
+                position: 'relative',
+                height: 520,
+                borderRadius: 'var(--mantine-radius-lg)',
+                overflow: 'hidden',
+              }}
+            >
+              <Image
+                src="/images/mattress-1.jpg"
+                alt="Матрас Strong в интерьере спальни"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                style={{ objectFit: 'cover' }}
+              />
+            </Box>
           </GridCol>
         </Grid>
       </Container>
@@ -214,7 +230,18 @@ export default function AboutPage() {
               </Stack>
             </GridCol>
             <GridCol span={{ base: 12, md: 5 }}>
-              <Placeholder h="100%" radius="0" style={{ minHeight: 260 }} />
+              <Box
+                className="zoom-img"
+                style={{ position: 'relative', minHeight: 260, height: '100%' }}
+              >
+                <Image
+                  src="/images/mattress-4.jpg"
+                  alt="Матрас Strong"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 40vw"
+                  style={{ objectFit: 'cover' }}
+                />
+              </Box>
             </GridCol>
           </Grid>
         </Card>
