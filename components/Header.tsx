@@ -3,25 +3,28 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
+  ActionIcon,
   Box,
   Burger,
   Button,
   Container,
   Drawer,
   Group,
-  Menu,
   Stack,
   UnstyledButton,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconChevronDown } from '@tabler/icons-react';
+import { IconBrandWhatsapp } from '@tabler/icons-react';
 import { Logo } from './Logo';
 
 const links = [
   { label: 'Главная', href: '/' },
   { label: 'О нас', href: '/about' },
   { label: 'Каталог', href: '/catalog' },
+  { label: 'Контакты', href: '/contacts' },
 ];
+
+const WHATSAPP_URL = 'https://wa.me/74951234567';
 
 export function Header() {
   const [opened, { toggle, close }] = useDisclosure(false);
@@ -31,19 +34,10 @@ export function Header() {
     href === '/' ? pathname === '/' : pathname.startsWith(href);
 
   return (
-    <Box
-      component="header"
-      style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 100,
-        background: 'var(--section-bg)',
-        borderBottom: '1px solid var(--border-color)',
-      }}
-    >
-      <Container h={68}>
+    <Box component="header" className="site-header">
+      <Container h={64}>
         <Group h="100%" justify="space-between" wrap="nowrap">
-          <Logo size={30} />
+          <Logo size={28} />
 
           <Group gap={32} visibleFrom="sm" wrap="nowrap">
             {links.map((l) => (
@@ -58,35 +52,22 @@ export function Header() {
                 {l.label}
               </UnstyledButton>
             ))}
-
-            <Menu trigger="hover" position="bottom-start" withArrow>
-              <Menu.Target>
-                <UnstyledButton
-                  fz="sm"
-                  fw={pathname.startsWith('/product') ? 600 : 500}
-                  c={pathname.startsWith('/product') ? 'brand.7' : 'dark'}
-                >
-                  <Group gap={4} wrap="nowrap">
-                    Товар
-                    <IconChevronDown size={14} />
-                  </Group>
-                </UnstyledButton>
-              </Menu.Target>
-              <Menu.Dropdown>
-                <Menu.Item component={Link} href="/product">
-                  Strong премиум
-                </Menu.Item>
-                <Menu.Item component={Link} href="/catalog">
-                  Все модели
-                </Menu.Item>
-              </Menu.Dropdown>
-            </Menu>
           </Group>
 
           <Group visibleFrom="sm">
-            <Button component={Link} href="/contacts" color="brand.6" radius="md">
-              Контакты
-            </Button>
+            <ActionIcon
+              component="a"
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              size={42}
+              radius="xl"
+              variant="filled"
+              color="#25D366"
+              aria-label="Написать в WhatsApp"
+            >
+              <IconBrandWhatsapp size={24} />
+            </ActionIcon>
           </Group>
 
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
@@ -111,28 +92,24 @@ export function Header() {
               onClick={close}
               fz="lg"
               fw={isActive(l.href) ? 600 : 500}
+              c={isActive(l.href) ? 'brand.7' : 'dark'}
             >
               {l.label}
             </UnstyledButton>
           ))}
-          <UnstyledButton
-            component={Link}
-            href="/product"
-            onClick={close}
-            fz="lg"
-            fw={500}
-          >
-            Товар
-          </UnstyledButton>
           <Button
-            component={Link}
-            href="/contacts"
+            component="a"
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={close}
-            color="brand.6"
+            color="#25D366"
+            className="keep-solid"
             mt="md"
             fullWidth
+            leftSection={<IconBrandWhatsapp size={20} />}
           >
-            Контакты
+            WhatsApp
           </Button>
         </Stack>
       </Drawer>

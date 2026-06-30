@@ -10,9 +10,9 @@ import {
   ThemeIcon,
   Title,
 } from '@mantine/core';
+import Image from 'next/image';
 import { IconMail, IconPhone, IconMapPin } from '@tabler/icons-react';
 import { Tagline } from '@/components/Tagline';
-import { Placeholder } from '@/components/Placeholder';
 import { ContactForm } from '@/components/ContactForm';
 
 export const metadata = {
@@ -97,9 +97,25 @@ export default function ContactsPage() {
         </Grid>
       </Container>
 
-      {/* КАРТА */}
+      {/* ФОТО */}
       <Container pb={{ base: 56, md: 96 }}>
-        <Placeholder h={420} variant="map" />
+        <Box
+          className="zoom-img"
+          style={{
+            position: 'relative',
+            height: 420,
+            borderRadius: 'var(--mantine-radius-lg)',
+            overflow: 'hidden',
+          }}
+        >
+          <Image
+            src="/images/mattress-7.jpg"
+            alt="Шоурум матрасов Strong"
+            fill
+            sizes="100vw"
+            style={{ objectFit: 'cover' }}
+          />
+        </Box>
       </Container>
 
       {/* ФОРМА */}
