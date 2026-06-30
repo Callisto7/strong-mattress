@@ -34,6 +34,7 @@ import { Tagline } from '@/components/Tagline';
 import { SectionIntro } from '@/components/SectionIntro';
 import { NumberedSteps } from '@/components/NumberedSteps';
 import { Reveal } from '@/components/Reveal';
+import { GlassButton } from '@/components/GlassButton';
 
 const services = [
   {
@@ -155,16 +156,17 @@ export default function HomePage() {
               Мы создаём матрасы, которые держат форму и поддерживают спину всю
               ночь. Качество, которое чувствуется с первого дня.
             </Text>
-            <Group>
-              <Button component={Link} href="/catalog" color="brand.6">
+            <Group gap="md">
+              <GlassButton href="/catalog" ariaLabel="Открыть каталог">
                 Каталог
-              </Button>
+              </GlassButton>
               <Button
                 component={Link}
                 href="/about"
                 variant="outline"
                 color="gray.0"
                 c="white"
+                size="md"
               >
                 Подробнее
               </Button>

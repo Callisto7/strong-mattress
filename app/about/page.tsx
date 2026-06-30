@@ -20,6 +20,8 @@ import {
   IconHeartHandshake,
 } from '@tabler/icons-react';
 import { Tagline } from '@/components/Tagline';
+import { PageHero } from '@/components/PageHero';
+import { GlassButton } from '@/components/GlassButton';
 
 export const metadata = {
   title: 'О нас — Strong',
@@ -42,33 +44,30 @@ const stats = [
 export default function AboutPage() {
   return (
     <>
-      {/* HERO */}
-      <Box style={{ background: '#8a8a8a', color: '#fff' }}>
-        <Container py={{ base: 64, md: 110 }}>
-          <Stack gap="lg" maw={640}>
-            <Tagline c="gray.2">О компании</Tagline>
-            <Title order={1}>Strong матрасы для сна</Title>
-            <Text fz="md" style={{ opacity: 0.92 }}>
-              Мы делаем матрасы, на которых люди спят спокойно и просыпаются
-              отдохнувшими
-            </Text>
-            <Group>
-              <Button component={Link} href="/catalog" color="brand.7">
-                Каталог
-              </Button>
-              <Button
-                component={Link}
-                href="/contacts"
-                variant="outline"
-                color="gray.0"
-                c="white"
-              >
-                Контакты
-              </Button>
-            </Group>
-          </Stack>
-        </Container>
-      </Box>
+      {/* HERO / БАННЕР */}
+      <PageHero
+        image="/images/mattress-6.jpg"
+        alt="Спальня с матрасом Strong"
+        tagline="О компании"
+        title="Strong матрасы для сна"
+        text="Мы делаем матрасы, на которых люди спят спокойно и просыпаются отдохнувшими"
+      >
+        <Group gap="md">
+          <GlassButton href="/catalog" ariaLabel="Открыть каталог">
+            Каталог
+          </GlassButton>
+          <Button
+            component={Link}
+            href="/contacts"
+            variant="outline"
+            color="gray.0"
+            c="white"
+            size="md"
+          >
+            Контакты
+          </Button>
+        </Group>
+      </PageHero>
 
       {/* ИСТОРИЯ */}
       <Container py={{ base: 56, md: 96 }}>
