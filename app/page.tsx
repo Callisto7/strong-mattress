@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Accordion,
   AccordionControl,
@@ -30,8 +31,8 @@ import {
   IconTrash,
 } from '@tabler/icons-react';
 import { Tagline } from '@/components/Tagline';
-import { Placeholder } from '@/components/Placeholder';
-import { ScrollHorizontalSteps } from '@/components/ScrollHorizontalSteps';
+import { SectionIntro } from '@/components/SectionIntro';
+import { NumberedSteps } from '@/components/NumberedSteps';
 
 const services = [
   {
@@ -87,6 +88,7 @@ const plans = [
   {
     name: 'Стандарт',
     desc: 'Базовый матрас с хорошей поддержкой',
+    image: '/images/plan-standard.jpg',
     specs: [
       ['Цена', '12000 ₽'],
       ['Гарантия', '10 лет'],
@@ -103,6 +105,7 @@ const plans = [
   {
     name: 'Премиум',
     desc: 'Матрас с улучшенной поддержкой',
+    image: '/images/plan-premium.jpg',
     specs: [
       ['Цена', '18000 ₽'],
       ['Гарантия', '10 лет'],
@@ -116,59 +119,66 @@ const plans = [
       ['Консультация бесплатно', true],
     ],
   },
-];
+] as const;
+
+const faqMid = Math.ceil(faq.length / 2);
 
 export default function HomePage() {
   return (
     <>
       {/* HERO */}
-      <Box
-        style={{
-          background:
-            'linear-gradient(115deg, #c9a227 0%, #6b7b4f 42%, #11705a 100%)',
-          color: '#fff',
-        }}
-      >
-        <Container py={{ base: 64, md: 120 }}>
-          <Stack gap="xl" style={{ minHeight: 420 }} justify="space-between">
-            <Title order={1} maw={620}>
-              Матрасы Strong для идеального сна
-            </Title>
-            <Stack gap="lg" maw={520} style={{ alignSelf: 'flex-end' }}>
-              <Text fz="md" style={{ opacity: 0.92 }}>
-                Мы создаём матрасы, которые держат форму и поддерживают спину
-                всю ночь. Качество, которое чувствуется с первого дня.
-              </Text>
-              <Group>
-                <Button component={Link} href="/catalog" color="brand.6">
-                  Каталог
-                </Button>
-                <Button
-                  component={Link}
-                  href="/about"
-                  variant="outline"
-                  color="gray.0"
-                  c="white"
-                >
-                  Подробнее
-                </Button>
-              </Group>
-            </Stack>
+      <Box component="section" className="hero">
+        <Image
+          src="/images/hero.jpg"
+          alt="Мужчина отдыхает в уютном интерьере"
+          fill
+          priority
+          sizes="100vw"
+          style={{ objectFit: 'cover', objectPosition: 'center', zIndex: 0 }}
+        />
+        <Box
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 1,
+            background:
+              'linear-gradient(90deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.15) 45%, rgba(0,0,0,0.35) 100%)',
+          }}
+        />
+        <Container className="hero-inner" py={{ base: 56, md: 80 }}>
+          <Title order={1} c="white" maw={640}>
+            Матрасы Strong для идеального сна
+          </Title>
+          <Stack gap="lg" maw={460} style={{ alignSelf: 'flex-end' }}>
+            <Text fz="md" c="white" style={{ lineHeight: 1.6 }}>
+              Мы создаём матрасы, которые держат форму и поддерживают спину всю
+              ночь. Качество, которое чувствуется с первого дня.
+            </Text>
+            <Group>
+              <Button component={Link} href="/catalog" color="brand.6">
+                Каталог
+              </Button>
+              <Button
+                component={Link}
+                href="/about"
+                variant="outline"
+                color="gray.0"
+                c="white"
+              >
+                Подробнее
+              </Button>
+            </Group>
           </Stack>
         </Container>
       </Box>
 
       {/* ТРИ ОСНОВЫ */}
-      <Container py={{ base: 56, md: 96 }}>
-        <Stack align="center" gap="xs" mb={48}>
-          <Tagline>Основное</Tagline>
-          <Title order={2} ta="center">
-            Три основы качества
-          </Title>
-          <Text c="dimmed" ta="center">
-            Каждый матрас Strong проверен и готов служить годы.
-          </Text>
-        </Stack>
+      <Container component="section" py={{ base: 56, md: 96 }}>
+        <SectionIntro
+          tagline="Основное"
+          title="Три основы качества"
+          text="Каждый матрас Strong проверен и готов служить годы."
+        />
         <Grid gutter="lg" align="stretch">
           {/* Большая карточка */}
           <GridCol span={{ base: 12, md: 6 }}>
@@ -178,13 +188,21 @@ export default function HomePage() {
               h="100%"
               style={{ background: '#1c5f6b', color: '#fff', overflow: 'hidden' }}
             >
-              <Placeholder h={200} radius="0" />
+              <Box style={{ position: 'relative', height: 220 }}>
+                <Image
+                  src="/images/feature-back.jpg"
+                  alt="Ортопедическая поддержка спины"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  style={{ objectFit: 'cover' }}
+                />
+              </Box>
               <Stack p="xl" gap="sm">
                 <Text fz="xl" fw={700}>
                   Ортопедическая поддержка спины
                 </Text>
-                <Text fz="sm" style={{ opacity: 0.85 }}>
-                  Позвоночник получает правильную поддержку всю ночь долгую.
+                <Text fz="sm" style={{ opacity: 0.85, lineHeight: 1.6 }}>
+                  Позвоночник получает правильную поддержку всю долгую ночь.
                 </Text>
                 <Group mt="xs">
                   <Button variant="outline" color="gray.0" c="white" size="sm">
@@ -214,20 +232,34 @@ export default function HomePage() {
                 position: 'relative',
                 borderRadius: 'var(--mantine-radius-lg)',
                 overflow: 'hidden',
-                background:
-                  'linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.75) 100%), #6b6f63',
                 color: '#fff',
               }}
             >
+              <Image
+                src="/images/feature-eco.jpg"
+                alt="Экологичные материалы"
+                fill
+                sizes="(max-width: 768px) 100vw, 25vw"
+                style={{ objectFit: 'cover', zIndex: 0 }}
+              />
+              <Box
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  zIndex: 1,
+                  background:
+                    'linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.8) 100%)',
+                }}
+              />
               <Stack
                 gap="sm"
                 p="lg"
-                style={{ position: 'absolute', inset: 'auto 0 0 0' }}
+                style={{ position: 'absolute', inset: 'auto 0 0 0', zIndex: 2 }}
               >
                 <Text fz="lg" fw={700}>
                   Экологичные материалы
                 </Text>
-                <Text fz="sm" style={{ opacity: 0.9 }}>
+                <Text fz="sm" style={{ opacity: 0.9, lineHeight: 1.6 }}>
                   Натуральные волокна дышат и служат верно долгие годы.
                 </Text>
                 <Button
@@ -259,7 +291,7 @@ export default function HomePage() {
                   <Text fz="lg" fw={700}>
                     Гарантия без сомнений
                   </Text>
-                  <Text fz="sm" c="dimmed" mt="sm">
+                  <Text fz="sm" c="dimmed" mt="sm" style={{ lineHeight: 1.6 }}>
                     Десять лет гарантии покрывает любые дефекты материала.
                   </Text>
                 </div>
@@ -280,17 +312,17 @@ export default function HomePage() {
       </Container>
 
       {/* НУМЕРОВАННЫЕ ШАГИ */}
-      <ScrollHorizontalSteps />
+      <NumberedSteps />
 
       {/* УСЛУГИ */}
-      <Box className="section-muted">
+      <Box component="section">
         <Container py={{ base: 56, md: 96 }}>
           <Grid gutter={48}>
             <GridCol span={{ base: 12, md: 5 }}>
               <Stack gap="lg" style={{ position: 'sticky', top: 96 }}>
                 <Tagline c="dark">Услуги</Tagline>
                 <Title order={2}>Доставим и установим матрас правильно</Title>
-                <Text c="dimmed">
+                <Text c="dimmed" style={{ lineHeight: 1.6 }}>
                   Мы берём на себя всю работу, чтобы вы спали спокойно. От
                   доставки до установки, всё сделаем как надо.
                 </Text>
@@ -301,6 +333,7 @@ export default function HomePage() {
                   <Button
                     variant="subtle"
                     color="dark"
+                    px={4}
                     rightSection={<IconArrowRight size={16} />}
                   >
                     Узнать
@@ -311,7 +344,7 @@ export default function HomePage() {
             <GridCol span={{ base: 12, md: 7 }}>
               <Stack gap="md">
                 {services.map((s) => (
-                  <Card key={s.title} radius="lg" p="xl" withBorder bg="#fff">
+                  <Card key={s.title} radius="lg" p="xl" withBorder>
                     <ThemeIcon variant="transparent" color="dark" size={32}>
                       <s.icon size={26} stroke={1.6} />
                     </ThemeIcon>
@@ -330,13 +363,18 @@ export default function HomePage() {
       </Box>
 
       {/* CTA БАННЕР */}
-      <Container py={{ base: 56, md: 96 }}>
+      <Container component="section" py={{ base: 56, md: 96 }}>
         <Card radius="lg" withBorder p={0} style={{ overflow: 'hidden' }}>
           <Grid gutter={0}>
             <GridCol span={{ base: 12, md: 7 }}>
-              <Stack p={{ base: 'xl', md: 48 }} gap="md" h="100%" justify="center">
+              <Stack
+                p={{ base: 'xl', md: 48 }}
+                gap="md"
+                h="100%"
+                justify="center"
+              >
                 <Title order={2}>Найдите свой матрас в каталоге</Title>
-                <Text c="dimmed">
+                <Text c="dimmed" style={{ lineHeight: 1.6 }}>
                   Выберите размер и жёсткость, которые подходят именно вам
                 </Text>
                 <Group align="flex-end" gap="sm" wrap="nowrap">
@@ -344,6 +382,7 @@ export default function HomePage() {
                     placeholder="Введите ваш адрес электронной почты"
                     style={{ flex: 1 }}
                     size="md"
+                    aria-label="Электронная почта"
                   />
                   <Button size="md" component={Link} href="/catalog">
                     Перейти
@@ -355,42 +394,57 @@ export default function HomePage() {
               </Stack>
             </GridCol>
             <GridCol span={{ base: 12, md: 5 }}>
-              <Placeholder h="100%" radius="0" style={{ minHeight: 260 }} />
+              <Box
+                style={{ position: 'relative', minHeight: 280, height: '100%' }}
+              >
+                <Image
+                  src="/images/cta-couch.jpg"
+                  alt="Консультация по выбору матраса"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 40vw"
+                  style={{ objectFit: 'cover' }}
+                />
+              </Box>
             </GridCol>
           </Grid>
         </Card>
       </Container>
 
       {/* FAQ */}
-      <Box className="section-muted">
+      <Box component="section" className="section-muted">
         <Container py={{ base: 56, md: 96 }}>
-          <Stack align="center" gap="xs" mb={48}>
-            <Title order={2} ta="center">
-              Вопросы
-            </Title>
-            <Text c="dimmed" ta="center">
-              Ответы на самые частые вопросы о матрасах Strong
-            </Text>
-          </Stack>
-          <Accordion variant="separated" radius="lg" multiple>
-            {faq.map((f, i) => (
-              <AccordionItem key={i} value={`faq-${i}`} bg="#fff">
-                <AccordionControl fw={600}>{f.q}</AccordionControl>
-                <AccordionPanel>
-                  <Text c="dimmed" fz="sm" style={{ lineHeight: 1.6 }}>
-                    {f.a}
-                  </Text>
-                </AccordionPanel>
-              </AccordionItem>
+          <SectionIntro
+            title="Вопросы"
+            text="Ответы на самые частые вопросы о матрасах Strong"
+          />
+          <SimpleGrid cols={{ base: 1, md: 2 }} spacing="md">
+            {[faq.slice(0, faqMid), faq.slice(faqMid)].map((col, ci) => (
+              <Accordion key={ci} variant="separated" radius="lg" multiple>
+                {col.map((f, i) => (
+                  <AccordionItem key={i} value={`faq-${ci}-${i}`} bg="#fff">
+                    <AccordionControl fw={600}>{f.q}</AccordionControl>
+                    <AccordionPanel>
+                      <Text c="dimmed" fz="sm" style={{ lineHeight: 1.6 }}>
+                        {f.a}
+                      </Text>
+                    </AccordionPanel>
+                  </AccordionItem>
+                ))}
+              </Accordion>
             ))}
-          </Accordion>
+          </SimpleGrid>
 
           <Stack align="center" gap="md" mt={64}>
             <Title order={3} ta="center">
               Остались вопросы?
             </Title>
             <Text c="dimmed">Остались вопросы о матрасах?</Text>
-            <Button component={Link} href="/contacts" variant="outline" color="dark">
+            <Button
+              component={Link}
+              href="/contacts"
+              variant="outline"
+              color="dark"
+            >
               Контакты
             </Button>
           </Stack>
@@ -398,20 +452,31 @@ export default function HomePage() {
       </Box>
 
       {/* СРАВНЕНИЕ ТОВАРОВ */}
-      <Container py={{ base: 56, md: 96 }}>
-        <Stack align="center" gap="xs" mb={48}>
-          <Tagline>Strong</Tagline>
-          <Title order={2} ta="center">
-            Матрасы для здорового сна
-          </Title>
-          <Text c="dimmed" ta="center">
-            Мы создаём матрасы, которые служат долгие годы и поддерживают спину
-          </Text>
-        </Stack>
+      <Container component="section" py={{ base: 56, md: 96 }}>
+        <SectionIntro
+          tagline="Strong"
+          title="Матрасы для здорового сна"
+          text="Мы создаём матрасы, которые служат долгие годы и поддерживают спину"
+        />
         <SimpleGrid cols={{ base: 1, md: 2 }} spacing="lg" maw={900} mx="auto">
           {plans.map((p) => (
             <Card key={p.name} radius="lg" withBorder p="xl">
-              <Placeholder h={200} radius="md" />
+              <Box
+                style={{
+                  position: 'relative',
+                  height: 220,
+                  borderRadius: 'var(--mantine-radius-md)',
+                  overflow: 'hidden',
+                }}
+              >
+                <Image
+                  src={p.image}
+                  alt={`Матрас ${p.name}`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 450px"
+                  style={{ objectFit: 'cover' }}
+                />
+              </Box>
               <Stack align="center" gap={4} my="lg">
                 <Text fz="xl" fw={700}>
                   {p.name}
@@ -443,13 +508,13 @@ export default function HomePage() {
                     key={label as string}
                     icon={
                       ok ? (
-                        <IconCheck size={18} color="var(--mantine-color-brand-7)" />
+                        <IconCheck size={18} color="#1a1a1a" />
                       ) : (
-                        <IconX size={18} color="#bbb" />
+                        <IconX size={18} color="#1a1a1a" />
                       )
                     }
                   >
-                    <Text fz="sm" c={ok ? 'dark' : 'dimmed'}>
+                    <Text fz="sm" c="dark">
                       {label}
                     </Text>
                   </ListItem>
