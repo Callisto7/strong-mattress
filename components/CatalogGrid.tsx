@@ -23,6 +23,8 @@ type Product = {
   id: string;
   name: string;
   image: string;
+  type: string;
+  height: number;
   firmness: Firmness;
   price: number;
   oldPrice?: number;
@@ -31,64 +33,100 @@ type Product = {
   badge?: string;
 };
 
+// Демо-данные: типы, диапазоны цен и высоты ориентированы на реальный
+// рынок (matras-city.ru). Названия и фото — собственные.
 const products: Product[] = [
   {
-    id: 'klassik',
-    name: 'Strong Классик',
-    image: '/images/mattress-1.jpg',
+    id: 'eko-lite',
+    name: 'Strong Эко Лайт',
+    image: '/images/mattress-3.jpg',
+    type: 'Беспружинный',
+    height: 18,
     firmness: 'Средняя',
-    price: 12990,
+    price: 9990,
+    rating: 4.6,
+    reviews: 96,
+  },
+  {
+    id: 'komfort',
+    name: 'Strong Комфорт',
+    image: '/images/mattress-1.jpg',
+    type: 'Беспружинный',
+    height: 21,
+    firmness: 'Средняя',
+    price: 12490,
     rating: 4.7,
     reviews: 128,
   },
   {
-    id: 'ortoped',
-    name: 'Strong Ортопед',
-    image: '/images/mattress-2.jpg',
+    id: 'komfort-bio',
+    name: 'Strong Комфорт Био',
+    image: '/images/mattress-6.jpg',
+    type: 'Независимый блок',
+    height: 20,
     firmness: 'Жёсткая',
-    price: 18990,
+    price: 14490,
+    rating: 4.7,
+    reviews: 154,
+  },
+  {
+    id: 'energy',
+    name: 'Strong Энерджи',
+    image: '/images/mattress-2.jpg',
+    type: 'Независимый блок',
+    height: 22,
+    firmness: 'Средняя',
+    price: 20020,
     rating: 4.9,
     reviews: 342,
     badge: 'Хит',
   },
   {
-    id: 'eko',
-    name: 'Strong Эко',
-    image: '/images/mattress-3.jpg',
-    firmness: 'Мягкая',
-    price: 15490,
-    rating: 4.6,
-    reviews: 96,
-    badge: 'Новинка',
-  },
-  {
-    id: 'lateks',
-    name: 'Strong Латекс',
-    image: '/images/mattress-4.jpg',
-    firmness: 'Средняя',
-    price: 21990,
-    rating: 4.8,
-    reviews: 210,
-  },
-  {
     id: 'kokos',
     name: 'Strong Кокос',
     image: '/images/mattress-5.jpg',
+    type: 'Беспружинный · кокос',
+    height: 20,
     firmness: 'Жёсткая',
-    price: 16990,
+    price: 23270,
     rating: 4.7,
-    reviews: 154,
+    reviews: 187,
   },
   {
-    id: 'oblako',
-    name: 'Strong Облако',
-    image: '/images/mattress-6.jpg',
+    id: 'dream',
+    name: 'Strong Дрим',
+    image: '/images/mattress-4.jpg',
+    type: 'Память формы',
+    height: 24,
     firmness: 'Мягкая',
-    price: 24990,
-    oldPrice: 28990,
+    price: 31340,
+    rating: 4.9,
+    reviews: 264,
+    badge: 'Новинка',
+  },
+  {
+    id: 'premium',
+    name: 'Strong Премиум',
+    image: '/images/mattress-7.jpg',
+    type: 'Независимый блок · латекс',
+    height: 26,
+    firmness: 'Средняя',
+    price: 34900,
+    oldPrice: 40010,
     rating: 4.9,
     reviews: 401,
-    badge: '−14%',
+    badge: '−13%',
+  },
+  {
+    id: 'kids',
+    name: 'Strong Кидс',
+    image: '/images/mattress-8.jpg',
+    type: 'Беспружинный · детский',
+    height: 16,
+    firmness: 'Средняя',
+    price: 8750,
+    rating: 4.8,
+    reviews: 73,
   },
 ];
 
@@ -181,9 +219,14 @@ export function CatalogGrid() {
 
                 <Stack p="lg" gap="sm" style={{ flex: 1 }}>
                   <Group justify="space-between" align="flex-start" wrap="nowrap">
-                    <Text fz="lg" fw={700}>
-                      {p.name}
-                    </Text>
+                    <div>
+                      <Text fz="lg" fw={700}>
+                        {p.name}
+                      </Text>
+                      <Text fz="xs" c="dimmed" mt={2}>
+                        {p.type} · {p.height} см
+                      </Text>
+                    </div>
                     <Badge variant="light" color="gray" radius="sm">
                       {p.firmness}
                     </Badge>
