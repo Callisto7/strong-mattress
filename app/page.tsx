@@ -33,6 +33,7 @@ import {
 import { Tagline } from '@/components/Tagline';
 import { SectionIntro } from '@/components/SectionIntro';
 import { NumberedSteps } from '@/components/NumberedSteps';
+import { Reveal } from '@/components/Reveal';
 
 const services = [
   {
@@ -174,21 +175,25 @@ export default function HomePage() {
 
       {/* ТРИ ОСНОВЫ */}
       <Container component="section" py={{ base: 56, md: 96 }}>
-        <SectionIntro
-          tagline="Основное"
-          title="Три основы качества"
-          text="Каждый матрас Strong проверен и готов служить годы."
-        />
+        <Reveal>
+          <SectionIntro
+            tagline="Основное"
+            title="Три основы качества"
+            text="Каждый матрас Strong проверен и готов служить годы."
+          />
+        </Reveal>
         <Grid gutter="lg" align="stretch">
           {/* Большая карточка */}
           <GridCol span={{ base: 12, md: 6 }}>
+            <Reveal fill>
             <Card
+              className="hover-card"
               p={0}
               radius="lg"
               h="100%"
               style={{ background: '#1c5f6b', color: '#fff', overflow: 'hidden' }}
             >
-              <Box style={{ position: 'relative', height: 220 }}>
+              <Box className="zoom-img" style={{ position: 'relative', height: 220 }}>
                 <Image
                   src="/images/feature-back.jpg"
                   alt="Ортопедическая поддержка спины"
@@ -221,11 +226,14 @@ export default function HomePage() {
                 </Group>
               </Stack>
             </Card>
+            </Reveal>
           </GridCol>
 
           {/* Карточка с фото и тёмным оверлеем */}
           <GridCol span={{ base: 12, md: 3 }}>
+            <Reveal fill delay={0.1}>
             <Box
+              className="hover-card zoom-img"
               h="100%"
               mih={360}
               style={{
@@ -275,11 +283,14 @@ export default function HomePage() {
                 </Button>
               </Stack>
             </Box>
+            </Reveal>
           </GridCol>
 
           {/* Светлая карточка */}
           <GridCol span={{ base: 12, md: 3 }}>
+            <Reveal fill delay={0.2}>
             <Card
+              className="hover-card"
               p="xl"
               radius="lg"
               h="100%"
@@ -307,6 +318,7 @@ export default function HomePage() {
                 </Button>
               </Stack>
             </Card>
+            </Reveal>
           </GridCol>
         </Grid>
       </Container>
@@ -319,42 +331,46 @@ export default function HomePage() {
         <Container py={{ base: 56, md: 96 }}>
           <Grid gutter={48}>
             <GridCol span={{ base: 12, md: 5 }}>
-              <Stack gap="lg" style={{ position: 'sticky', top: 96 }}>
-                <Tagline c="dark">Услуги</Tagline>
-                <Title order={2}>Доставим и установим матрас правильно</Title>
-                <Text c="dimmed" style={{ lineHeight: 1.6 }}>
-                  Мы берём на себя всю работу, чтобы вы спали спокойно. От
-                  доставки до установки, всё сделаем как надо.
-                </Text>
-                <Group>
-                  <Button variant="outline" color="dark">
-                    Заказать
-                  </Button>
-                  <Button
-                    variant="subtle"
-                    color="dark"
-                    px={4}
-                    rightSection={<IconArrowRight size={16} />}
-                  >
-                    Узнать
-                  </Button>
-                </Group>
-              </Stack>
+              <Reveal>
+                <Stack gap="lg" style={{ position: 'sticky', top: 96 }}>
+                  <Tagline c="dark">Услуги</Tagline>
+                  <Title order={2}>Доставим и установим матрас правильно</Title>
+                  <Text c="dimmed" style={{ lineHeight: 1.6 }}>
+                    Мы берём на себя всю работу, чтобы вы спали спокойно. От
+                    доставки до установки, всё сделаем как надо.
+                  </Text>
+                  <Group>
+                    <Button variant="outline" color="dark">
+                      Заказать
+                    </Button>
+                    <Button
+                      variant="subtle"
+                      color="dark"
+                      px={4}
+                      rightSection={<IconArrowRight size={16} />}
+                    >
+                      Узнать
+                    </Button>
+                  </Group>
+                </Stack>
+              </Reveal>
             </GridCol>
             <GridCol span={{ base: 12, md: 7 }}>
               <Stack gap="md">
-                {services.map((s) => (
-                  <Card key={s.title} radius="lg" p="xl" withBorder>
-                    <ThemeIcon variant="transparent" color="dark" size={32}>
-                      <s.icon size={26} stroke={1.6} />
-                    </ThemeIcon>
-                    <Text fz="lg" fw={600} mt="sm">
-                      {s.title}
-                    </Text>
-                    <Text fz="sm" c="dimmed" mt={6} style={{ lineHeight: 1.6 }}>
-                      {s.text}
-                    </Text>
-                  </Card>
+                {services.map((s, i) => (
+                  <Reveal key={s.title} delay={i * 0.08} y={20}>
+                    <Card className="hover-card" radius="lg" p="xl" withBorder>
+                      <ThemeIcon variant="transparent" color="dark" size={32}>
+                        <s.icon size={26} stroke={1.6} />
+                      </ThemeIcon>
+                      <Text fz="lg" fw={600} mt="sm">
+                        {s.title}
+                      </Text>
+                      <Text fz="sm" c="dimmed" mt={6} style={{ lineHeight: 1.6 }}>
+                        {s.text}
+                      </Text>
+                    </Card>
+                  </Reveal>
                 ))}
               </Stack>
             </GridCol>

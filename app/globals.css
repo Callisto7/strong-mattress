@@ -60,3 +60,57 @@ a {
     gap: var(--mantine-spacing-xs) !important;
   }
 }
+
+/* Big gradient step number */
+.step-number {
+  background: linear-gradient(
+    135deg,
+    var(--mantine-color-brand-6) 0%,
+    var(--mantine-color-brand-8) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Modern hover affordances */
+.hover-card {
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.hover-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 48px -24px rgba(15, 23, 20, 0.45);
+}
+
+.zoom-img {
+  overflow: hidden;
+}
+
+.zoom-img img {
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.zoom-img:hover img {
+  transform: scale(1.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hover-card,
+  .zoom-img img {
+    transition: none;
+  }
+
+  .hover-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .zoom-img:hover img {
+    transform: none;
+  }
+}

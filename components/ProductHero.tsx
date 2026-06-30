@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import {
   Accordion,
   Box,
@@ -15,7 +16,13 @@ import {
   Text,
   Title,
 } from '@mantine/core';
-import { Placeholder } from './Placeholder';
+
+const gallery = [
+  '/images/mattress-1.jpg',
+  '/images/mattress-7.jpg',
+  '/images/mattress-8.jpg',
+  '/images/mattress-4.jpg',
+];
 
 const details = [
   {
@@ -43,27 +50,54 @@ export function ProductHero() {
       <Grid.Col span={{ base: 12, md: 6 }}>
         <Group align="flex-start" gap="md" wrap="nowrap">
           <Stack gap="sm" visibleFrom="xs">
-            {[0, 1, 2, 3].map((i) => (
+            {gallery.map((src, i) => (
               <Box
-                key={i}
+                key={src}
                 onClick={() => setActive(i)}
-                style={{ cursor: 'pointer', width: 64 }}
+                style={{
+                  cursor: 'pointer',
+                  width: 72,
+                  height: 72,
+                  position: 'relative',
+                  borderRadius: 'var(--mantine-radius-md)',
+                  overflow: 'hidden',
+                  outline:
+                    active === i
+                      ? '2px solid var(--mantine-color-brand-7)'
+                      : '1px solid var(--border-color)',
+                  outlineOffset: active === i ? 2 : 0,
+                  transition: 'outline-color 0.2s ease',
+                }}
               >
-                <Placeholder
-                  h={64}
-                  radius="md"
-                  style={{
-                    outline:
-                      active === i
-                        ? '2px solid var(--mantine-color-brand-7)'
-                        : 'none',
-                  }}
+                <Image
+                  src={src}
+                  alt={`Strong премиум — фото ${i + 1}`}
+                  fill
+                  sizes="72px"
+                  style={{ objectFit: 'cover' }}
                 />
               </Box>
             ))}
           </Stack>
-          <Box style={{ flex: 1 }}>
-            <Placeholder h={460} />
+          <Box
+            className="zoom-img"
+            style={{
+              flex: 1,
+              position: 'relative',
+              height: 460,
+              borderRadius: 'var(--mantine-radius-lg)',
+              overflow: 'hidden',
+            }}
+          >
+            <Image
+              key={gallery[active]}
+              src={gallery[active]}
+              alt="Strong премиум матрас"
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 45vw"
+              style={{ objectFit: 'cover' }}
+            />
           </Box>
         </Group>
       </Grid.Col>
