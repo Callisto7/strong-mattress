@@ -34,9 +34,9 @@ const pacifico = Pacifico({
 });
 
 export const metadata: Metadata = {
-  title: 'Strong — матрасы для идеального сна',
+  title: 'City Mattress — матрасы для идеального сна',
   description:
-    'Strong создаёт матрасы, которые держат форму и поддерживают спину всю ночь. Качество, которое чувствуется с первого дня.',
+    'City Mattress создаёт матрасы, которые держат форму и поддерживают спину всю ночь. Качество, которое чувствуется с первого дня.',
 };
 
 export default function RootLayout({

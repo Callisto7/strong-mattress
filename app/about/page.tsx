@@ -24,7 +24,7 @@ import { PageHero } from '@/components/PageHero';
 import { GlassButton } from '@/components/GlassButton';
 
 export const metadata = {
-  title: 'О нас — Strong',
+  title: 'О нас — City Mattress',
 };
 
 const stats = [
@@ -47,9 +47,9 @@ export default function AboutPage() {
       {/* HERO / БАННЕР */}
       <PageHero
         image="/images/mattress-6.jpg"
-        alt="Спальня с матрасом Strong"
+        alt="Спальня с матрасом City Mattress"
         tagline="О компании"
-        title="Strong матрасы для сна"
+        title="City Mattress матрасы для сна"
         text="Мы делаем матрасы, на которых люди спят спокойно и просыпаются отдохнувшими"
       >
         <Group gap="md">
@@ -75,7 +75,7 @@ export default function AboutPage() {
         <Grid gutter={48} mt="md">
           <GridCol span={{ base: 12, md: 6 }}>
             <Stack gap="xl">
-              <Title order={2}>Как всё начиналось с Strong</Title>
+              <Title order={2}>Как всё начиналось с City Mattress</Title>
               <Text c="dimmed" style={{ lineHeight: 1.7 }}>
                 Мы начали с простой идеи: матрас должен быть честным. Не
                 маркетингом, не обещаниями, а настоящим качеством, которое люди
@@ -145,7 +145,7 @@ export default function AboutPage() {
             >
               <Image
                 src="/images/mattress-1.jpg"
-                alt="Матрас Strong в интерьере спальни"
+                alt="City Mattress в интерьере спальни"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 style={{ objectFit: 'cover' }}

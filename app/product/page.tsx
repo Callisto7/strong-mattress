@@ -22,7 +22,7 @@ import { Reveal } from '@/components/Reveal';
 import { ProductHero } from '@/components/ProductHero';
 
 export const metadata = {
-  title: 'Strong премиум матрас — Strong',
+  title: 'City Mattress премиум матрас — City Mattress',
 };
 
 const bullets = [
@@ -43,7 +43,7 @@ export default function ProductPage() {
             Матрасы
           </Anchor>
           <Text fz="sm" fw={600}>
-            Strong премиум
+            City Mattress премиум
           </Text>
         </Breadcrumbs>
 
@@ -61,7 +61,7 @@ export default function ProductPage() {
               >
                 <Image
                   src="/images/mattress-5.jpg"
-                  alt="Конструкция матраса Strong премиум"
+                  alt="Конструкция матраса City Mattress премиум"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   style={{ objectFit: 'cover' }}
@@ -72,7 +72,7 @@ export default function ProductPage() {
               <Stack p={{ base: 'xl', md: 48 }} gap="md" justify="center" h="100%">
                 <Tagline c="dark">Конструкция</Tagline>
                 <Title order={2}>
-                  Матрас Strong премиум создан для идеального сна
+                  City Mattress премиум создан для идеального сна
                 </Title>
                 <Text c="dimmed" style={{ lineHeight: 1.7 }}>
                   Каждый слой работает вместе, чтобы поддерживать позвоночник и
@@ -110,13 +110,13 @@ export default function ProductPage() {
             <Grid gutter={48} mb={48}>
               <GridCol span={{ base: 12, md: 6 }}>
                 <Title order={2}>
-                  Strong премиум матрас выбирают люди, которые ценят качество сна
+                  City Mattress премиум матрас выбирают люди, которые ценят качество сна
                 </Title>
               </GridCol>
               <GridCol span={{ base: 12, md: 6 }}>
                 <Text c="dimmed" style={{ lineHeight: 1.7 }}>
                   Матрас прошёл тестирование и получил одобрение независимых
-                  экспертов. Тысячи людей спят на Strong премиум и просыпаются
+                  экспертов. Тысячи людей спят на City Mattress премиум и просыпаются
                   отдохнувшими. Это не просто матрас, это инвестиция в ваше
                   здоровье.
                 </Text>
@@ -142,7 +142,7 @@ export default function ProductPage() {
               >
                 <Image
                   src="/images/mattress-2.jpg"
-                  alt="Матрас Strong премиум"
+                  alt="City Mattress премиум"
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
                   style={{ objectFit: 'cover' }}
@@ -190,7 +190,7 @@ export default function ProductPage() {
                   50000
                 </Text>
                 <Text fz="xs" c="dimmed" ta="center" mt="md">
-                  Людей спят лучше с Strong премиум
+                  Людей спят лучше с City Mattress премиум
                 </Text>
               </Card>
             </GridCol>
@@ -206,7 +206,7 @@ export default function ProductPage() {
               >
                 <Image
                   src="/images/mattress-8.jpg"
-                  alt="Матрас Strong премиум в интерьере"
+                  alt="City Mattress премиум в интерьере"
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
                   style={{ objectFit: 'cover' }}

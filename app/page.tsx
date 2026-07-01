@@ -35,6 +35,8 @@ import { SectionIntro } from '@/components/SectionIntro';
 import { NumberedSteps } from '@/components/NumberedSteps';
 import { Reveal } from '@/components/Reveal';
 import { GlassButton } from '@/components/GlassButton';
+import { CategoryBanners } from '@/components/CategoryBanners';
+import { Bestsellers } from '@/components/Bestsellers';
 
 const services = [
   {
@@ -65,7 +67,7 @@ const faq = [
   },
   {
     q: 'Как долго служит матрас?',
-    a: 'Матрас Strong служит десять лет и более. Всё зависит от ухода и использования. Мы даём десятилетнюю гарантию на все дефекты материала.',
+    a: 'Матрас City служит десять лет и более. Всё зависит от ухода и использования. Мы даём десятилетнюю гарантию на все дефекты материала.',
   },
   {
     q: 'Можно ли вернуть матрас?',
@@ -144,7 +146,7 @@ export default function HomePage() {
         />
         <Container className="hero-inner" py={{ base: 56, md: 80 }}>
           <Title order={1} c="white" maw={640}>
-            Матрасы Strong для идеального сна
+            City Mattress для идеального сна
           </Title>
           <Stack gap="lg" maw={460} style={{ alignSelf: 'flex-end' }}>
             <Text fz="md" c="white" style={{ lineHeight: 1.6 }}>
@@ -170,13 +172,52 @@ export default function HomePage() {
         </Container>
       </Box>
 
+      {/* КАТЕГОРИИ */}
+      <Container component="section" py={{ base: 48, md: 72 }}>
+        <Reveal>
+          <SectionIntro
+            tagline="Каталог"
+            title="Всё для спальни"
+            text="Матрасы, кровати, подушки и стеллажи — выбирайте категорию."
+          />
+        </Reveal>
+        <CategoryBanners />
+      </Container>
+
+      {/* ХИТЫ ПРОДАЖ */}
+      <Box component="section" className="section-muted">
+        <Container py={{ base: 56, md: 96 }}>
+          <Reveal>
+            <SectionIntro
+              tagline="Популярное"
+              title="Хиты продаж"
+              text="Модели, которые чаще всего выбирают наши покупатели."
+            />
+          </Reveal>
+          <Bestsellers />
+          <Group justify="center" mt="xl">
+            <Button
+              component={Link}
+              href="/catalog"
+              variant="outline"
+              color="dark"
+              size="md"
+              radius="md"
+              rightSection={<IconArrowRight size={18} />}
+            >
+              Весь каталог
+            </Button>
+          </Group>
+        </Container>
+      </Box>
+
       {/* ТРИ ОСНОВЫ */}
       <Container component="section" py={{ base: 56, md: 96 }}>
         <Reveal>
           <SectionIntro
             tagline="Основное"
             title="Три основы качества"
-            text="Каждый матрас Strong проверен и готов служить годы."
+            text="Каждый City Mattress проверен и готов служить годы."
           />
         </Reveal>
         <Grid gutter="lg" align="stretch">
@@ -379,7 +420,7 @@ export default function HomePage() {
         <Container py={{ base: 56, md: 96 }}>
           <SectionIntro
             title="Вопросы"
-            text="Ответы на самые частые вопросы о матрасах Strong"
+            text="Ответы на самые частые вопросы о матрасах City Mattress"
           />
           <SimpleGrid cols={{ base: 1, md: 2 }} spacing="md">
             {[faq.slice(0, faqMid), faq.slice(faqMid)].map((col, ci) => (
@@ -403,7 +444,7 @@ export default function HomePage() {
       {/* СРАВНЕНИЕ ТОВАРОВ */}
       <Container component="section" py={{ base: 56, md: 96 }}>
         <SectionIntro
-          tagline="Strong"
+          tagline="City Mattress"
           title="Матрасы для здорового сна"
           text="Мы создаём матрасы, которые служат долгие годы и поддерживают спину"
         />

@@ -18,7 +18,7 @@ export function Logo({
         color,
         display: 'inline-block',
       }}
-      aria-label="Strong — на главную"
+      aria-label="City Mattress — на главную"
     >
       Logo
     </Link>

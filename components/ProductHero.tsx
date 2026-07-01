@@ -3,46 +3,68 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import {
-  Accordion,
+  ActionIcon,
+  Anchor,
+  Badge,
   Box,
   Button,
   Grid,
   Group,
-  NumberInput,
   Rating,
-  SegmentedControl,
   Select,
   Stack,
   Text,
+  ThemeIcon,
   Title,
 } from '@mantine/core';
+import {
+  IconArrowsMaximize,
+  IconBarbell,
+  IconGitCompare,
+  IconHeart,
+  IconRuler2,
+} from '@tabler/icons-react';
+import { formatPrice, productLoad, products, type Product } from './products';
 
-const gallery = [
+const WHATSAPP_URL = 'https://wa.me/74951234567';
+
+const fallbackGallery = [
   '/images/mattress-1.jpg',
   '/images/mattress-7.jpg',
   '/images/mattress-8.jpg',
   '/images/mattress-4.jpg',
 ];
 
-const details = [
-  {
-    t: 'Материалы',
-    d: 'Матрас состоит из пены высокой плотности и слоя латекса. Каждый слой работает вместе для поддержки и комфорта. Конструкция обеспечивает равномерное распределение веса по всей поверхности.',
-  },
-  {
-    t: 'Доставка',
-    d: 'Предлагаем матрас в стандартных размерах от одноместного до королевского. Каждый размер имеет одинаковую высоту и качество материалов. Выберите размер, который подходит вашей кровати.',
-  },
-  {
-    t: 'Возврат',
-    d: 'Strong гарантирует матрас на десять лет от производственных дефектов. Если возникнут проблемы, мы заменим матрас без вопросов. Ваше спокойствие и удовлетворение для нас важны.',
-  },
+const sizes = [
+  'Односпальный 90×200',
+  'Полуторный 120×200',
+  'Двуспальный 160×200',
+  'Кинг-сайз 180×200',
 ];
 
-export function ProductHero() {
+const defaultProduct: Product =
+  products.find((p) => p.id === 'premium') ?? products[0];
+
+export function ProductHero({ product = defaultProduct }: { product?: Product }) {
+  const gallery = [
+    product.image,
+    ...fallbackGallery.filter((g) => g !== product.image),
+  ].slice(0, 4);
+
   const [active, setActive] = useState(0);
-  const [hardness, setHardness] = useState('Средняя жёсткость');
-  const [qty, setQty] = useState<string | number>(1);
+  const [size, setSize] = useState<string | null>('Двуспальный 160×200');
+
+  const specs = [
+    { icon: IconBarbell, label: 'Нагрузка', value: `${productLoad(product)} кг` },
+    { icon: IconArrowsMaximize, label: 'Жёсткость', value: product.firmness },
+    { icon: IconRuler2, label: 'Высота', value: `${product.height} см` },
+  ];
+
+  const buildOrder = (kind: string) =>
+    `${WHATSAPP_URL}?text=${encodeURIComponent(
+      `Здравствуйте! ${kind} матрас «${product.name}» (${formatPrice(product.price)}), ` +
+        `размер: ${size ?? 'уточню'}.`,
+    )}`;
 
   return (
     <Grid gutter={48}>
@@ -71,7 +93,7 @@ export function ProductHero() {
               >
                 <Image
                   src={src}
-                  alt={`Strong премиум — фото ${i + 1}`}
+                  alt={`${product.name} — фото ${i + 1}`}
                   fill
                   sizes="72px"
                   style={{ objectFit: 'cover' }}
@@ -92,109 +114,118 @@ export function ProductHero() {
             <Image
               key={gallery[active]}
               src={gallery[active]}
-              alt="Strong премиум матрас"
+              alt={product.name}
               fill
               priority
               sizes="(max-width: 768px) 100vw, 45vw"
               style={{ objectFit: 'cover' }}
             />
+            {product.badge && (
+              <Badge
+                color="brand.7"
+                radius="sm"
+                size="lg"
+                style={{ position: 'absolute', top: 16, left: 16 }}
+              >
+                {product.badge}
+              </Badge>
+            )}
           </Box>
         </Group>
       </Grid.Col>
 
       {/* ИНФОРМАЦИЯ */}
       <Grid.Col span={{ base: 12, md: 6 }}>
-        <Stack gap="md">
-          <Title order={1} fz={{ base: 36, md: 44 }}>
-            Strong премиум матрас
-          </Title>
-          <Text fz={28} fw={700}>
-            ₽18 990
-          </Text>
-          <Group gap="xs">
-            <Rating value={4.5} fractions={2} readOnly size="sm" />
-            <Text fz="sm" c="dimmed">
-              4.8 из 5 звёзд • 342 отзыва
-            </Text>
-          </Group>
-          <Text c="dimmed" style={{ lineHeight: 1.7 }}>
-            Матрас Strong премиум создан из высокоплотной пены и натурального
-            латекса для поддержки позвоночника. Воздухопроницаемое покрытие
-            обеспечивает комфортный сон всю ночь.
-          </Text>
+        <Stack gap="lg">
+          <div>
+            <Title order={1} fz={{ base: 32, md: 40 }}>
+              {product.name}
+            </Title>
+            <Group gap="sm" align="baseline" mt="xs">
+              <Text fz={30} fw={800}>
+                {formatPrice(product.price)}
+              </Text>
+              {product.oldPrice && (
+                <Text fz="lg" c="dimmed" td="line-through">
+                  {formatPrice(product.oldPrice)}
+                </Text>
+              )}
+            </Group>
+          </div>
 
           <div>
             <Text fw={600} fz="sm" mb={6}>
               Размер
             </Text>
             <Select
-              placeholder="Выбрать"
+              value={size}
+              onChange={setSize}
+              data={sizes}
               size="md"
-              data={[
-                'Односпальный 90×200',
-                'Полуторный 120×200',
-                'Двуспальный 160×200',
-                'Кинг-сайз 180×200',
-              ]}
+              allowDeselect={false}
             />
+            <Anchor href={buildOrder('Нужен нестандартный размер для матраса')} target="_blank" c="dimmed" fz="sm" mt={6} inline>
+              Нужен нестандартный размер?
+            </Anchor>
           </div>
 
-          <div>
-            <Text fw={600} fz="sm" mb={6}>
-              Жёсткость
-            </Text>
-            <SegmentedControl
-              value={hardness}
-              onChange={setHardness}
-              fullWidth
-              data={[
-                { label: 'Средняя жёсткость', value: 'Средняя жёсткость' },
-                { label: 'Высокая жёсткость', value: 'Высокая жёсткость' },
-                {
-                  label: 'Низкая жёсткость',
-                  value: 'Низкая жёсткость',
-                  disabled: true,
-                },
-              ]}
-            />
-          </div>
-
-          <div>
-            <Text fw={600} fz="sm" mb={6}>
-              Количество
-            </Text>
-            <NumberInput
-              value={qty}
-              onChange={setQty}
-              min={1}
-              max={10}
-              w={120}
-              size="md"
-            />
-          </div>
-
-          <Button size="md" color="brand.8" fullWidth>
-            Добавить в корзину
-          </Button>
-          <Button size="md" variant="outline" color="dark" fullWidth>
-            Купить сейчас
-          </Button>
-          <Text fz="xs" c="dimmed" ta="center">
-            Гарантия возврата денег
-          </Text>
-
-          <Accordion variant="default" mt="sm">
-            {details.map((d) => (
-              <Accordion.Item key={d.t} value={d.t}>
-                <Accordion.Control fw={600}>{d.t}</Accordion.Control>
-                <Accordion.Panel>
-                  <Text c="dimmed" fz="sm" style={{ lineHeight: 1.6 }}>
-                    {d.d}
-                  </Text>
-                </Accordion.Panel>
-              </Accordion.Item>
+          {/* Характеристики с иконками */}
+          <Stack gap="sm">
+            {specs.map((s) => (
+              <Group key={s.label} gap="sm">
+                <ThemeIcon variant="light" color="brand.7" radius="md" size={32}>
+                  <s.icon size={18} stroke={1.7} />
+                </ThemeIcon>
+                <Text fz="sm" c="dimmed">
+                  {s.label}
+                </Text>
+                <Text fz="sm" fw={600}>
+                  {s.value}
+                </Text>
+              </Group>
             ))}
-          </Accordion>
+          </Stack>
+
+          <Group gap="sm" wrap="wrap">
+            <Button
+              component="a"
+              href={buildOrder('Хочу заказать')}
+              target="_blank"
+              rel="noopener noreferrer"
+              size="md"
+              color="brand.8"
+            >
+              Добавить в корзину
+            </Button>
+            <Button
+              component="a"
+              href={buildOrder('Купить в один клик:')}
+              target="_blank"
+              rel="noopener noreferrer"
+              size="md"
+              variant="outline"
+              color="dark"
+            >
+              Купить в один клик
+            </Button>
+          </Group>
+
+          <Group gap="lg">
+            <Group gap="xs">
+              <Rating value={product.rating} fractions={2} readOnly size="sm" />
+              <Text fz="sm" c="dimmed">
+                {product.rating} • {product.reviews} отзывов
+              </Text>
+            </Group>
+            <Group gap="xs" ml="auto">
+              <ActionIcon variant="subtle" color="gray" radius="xl" aria-label="В избранное">
+                <IconHeart size={20} />
+              </ActionIcon>
+              <ActionIcon variant="subtle" color="gray" radius="xl" aria-label="К сравнению">
+                <IconGitCompare size={20} />
+              </ActionIcon>
+            </Group>
+          </Group>
         </Stack>
       </Grid.Col>
     </Grid>

@@ -17,15 +17,15 @@ import { PageHero } from '@/components/PageHero';
 import { ContactForm } from '@/components/ContactForm';
 
 export const metadata = {
-  title: 'Контакты — Strong',
+  title: 'Контакты — City Mattress',
 };
 
 const contacts = [
   {
     icon: IconMail,
     label: 'Почта',
-    value: 'info@strongmattress.ru',
-    href: 'mailto:info@strongmattress.ru',
+    value: 'info@citymattress.ru',
+    href: 'mailto:info@citymattressmattress.ru',
   },
   {
     icon: IconPhone,
@@ -70,10 +70,10 @@ export default function ContactsPage() {
       {/* HERO / БАННЕР */}
       <PageHero
         image="/images/mattress-2.jpg"
-        alt="Шоурум матрасов Strong"
+        alt="Шоурум матрасов City Mattress"
         tagline="Контакты"
         title="Мы здесь для вас"
-        text="Свяжитесь с нами — мы всегда на связи и готовы помочь с выбором матраса Strong"
+        text="Свяжитесь с нами — мы всегда на связи и готовы помочь с выбором матраса City Mattress"
       />
 
       {/* КОНТАКТНАЯ ИНФОРМАЦИЯ */}
@@ -107,7 +107,7 @@ export default function ContactsPage() {
         >
           <Image
             src="/images/mattress-7.jpg"
-            alt="Шоурум матрасов Strong"
+            alt="Шоурум City Mattress"
             fill
             sizes="100vw"
             style={{ objectFit: 'cover' }}

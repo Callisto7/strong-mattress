@@ -1,18 +1,13 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import {
   Anchor,
   Box,
   Breadcrumbs,
-  Button,
-  Card,
   Container,
-  Grid,
-  GridCol,
-  Group,
+  Loader,
   Stack,
   Text,
-  TextInput,
   Title,
 } from '@mantine/core';
 import { Tagline } from '@/components/Tagline';
@@ -21,9 +16,9 @@ import { CatalogGrid } from '@/components/CatalogGrid';
 import { MattressConfigurator } from '@/components/MattressConfigurator';
 
 export const metadata = {
-  title: 'Каталог матрасов — Strong',
+  title: 'Каталог матрасов — City Mattress',
   description:
-    'Полный каталог матрасов Strong: ортопедические, эко, латексные и кокосовые модели для здорового сна.',
+    'Полный каталог матрасов City Mattress: ортопедические, эко, латексные и кокосовые модели для здорового сна.',
 };
 
 export default function CatalogPage() {
@@ -54,7 +49,9 @@ export default function CatalogPage() {
 
       {/* СЕТКА ТОВАРОВ */}
       <Container component="section" pb={{ base: 56, md: 96 }} pt="lg">
-        <CatalogGrid />
+        <Suspense fallback={<Loader color="brand.7" />}>
+          <CatalogGrid />
+        </Suspense>
       </Container>
 
       {/* КОНСТРУКТОР ВЫБОРА */}

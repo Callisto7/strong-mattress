@@ -3,16 +3,16 @@
 import { createTheme, MantineColorsTuple, rem } from '@mantine/core';
 
 const brand: MantineColorsTuple = [
-  '#e7f7ee',
-  '#c8ecd7',
-  '#a0ddba',
-  '#74cd9b',
-  '#50c082',
-  '#37b772',
-  '#27ad66', // 6 — bright green (navbar CTA)
-  '#1f8a4c', // 7 — primary
-  '#166b3a', // 8 — dark green (filled buttons)
-  '#0c4d28', // 9
+  '#edf2f8', // 0
+  '#d6e0ec', // 1
+  '#b3c6db', // 2
+  '#8ca8c5', // 3
+  '#678aac', // 4
+  '#486d8b', // 5
+  '#2f5375', // 6
+  '#20395c', // 7 — основной брендовый
+  '#172b46', // 8 — hover/active
+  '#0d1a2c', // 9 — самый темный
 ];
 
 export const theme = createTheme({

@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   ActionIcon,
   Box,
@@ -10,48 +10,61 @@ import {
   Container,
   Drawer,
   Group,
+  Image,
   Stack,
   UnstyledButton,
-} from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { IconBrandWhatsapp } from '@tabler/icons-react';
-import { Logo } from './Logo';
+} from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { IconBrandWhatsapp } from "@tabler/icons-react";
+import { Logo } from "./Logo";
+import { catalogSideItems } from "./categories";
+import { CatalogMegaMenu } from "./CatalogMegaMenu";
+
 
 const links = [
-  { label: 'Главная', href: '/' },
-  { label: 'О нас', href: '/about' },
-  { label: 'Каталог', href: '/catalog' },
-  { label: 'Контакты', href: '/contacts' },
+  { label: "Главная", href: "/" },
+  { label: "О нас", href: "/about" },
+  { label: "Каталог", href: "/catalog", dropdown: true },
+  { label: "Контакты", href: "/contacts" },
 ];
 
-const WHATSAPP_URL = 'https://wa.me/74951234567';
+const WHATSAPP_URL = "https://wa.me/74951234567";
 
 export function Header() {
   const [opened, { toggle, close }] = useDisclosure(false);
   const pathname = usePathname();
 
   const isActive = (href: string) =>
-    href === '/' ? pathname === '/' : pathname.startsWith(href);
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
     <Box component="header" className="site-header">
       <Container h={64}>
         <Group h="100%" justify="space-between" wrap="nowrap">
-          <Logo size={28} />
-
+          <Link href='/' >
+            <Image src="/logo.png" width={200} height='40px' />
+          </Link>
           <Group gap={32} visibleFrom="sm" wrap="nowrap">
-            {links.map((l) => (
-              <UnstyledButton
-                key={l.href}
-                component={Link}
-                href={l.href}
-                fz="sm"
-                fw={isActive(l.href) ? 600 : 500}
-                c={isActive(l.href) ? 'brand.7' : 'dark'}
-              >
-                {l.label}
-              </UnstyledButton>
-            ))}
+            {links.map((l) =>
+              l.dropdown ? (
+                <CatalogMegaMenu
+                  key={l.href}
+                  href={l.href}
+                  active={isActive(l.href)}
+                />
+              ) : (
+                <UnstyledButton
+                  key={l.href}
+                  component={Link}
+                  href={l.href}
+                  fz="sm"
+                  fw={isActive(l.href) ? 600 : 500}
+                  c={isActive(l.href) ? "brand.7" : "dark"}
+                >
+                  {l.label}
+                </UnstyledButton>
+              ),
+            )}
           </Group>
 
           <Group visibleFrom="sm">
@@ -63,7 +76,6 @@ export function Header() {
               size={42}
               radius="xl"
               variant="filled"
-              color="#25D366"
               aria-label="Написать в WhatsApp"
             >
               <IconBrandWhatsapp size={24} />
@@ -85,17 +97,40 @@ export function Header() {
       >
         <Stack gap="lg" mt="md">
           {links.map((l) => (
-            <UnstyledButton
-              key={l.href}
-              component={Link}
-              href={l.href}
-              onClick={close}
-              fz="lg"
-              fw={isActive(l.href) ? 600 : 500}
-              c={isActive(l.href) ? 'brand.7' : 'dark'}
-            >
-              {l.label}
-            </UnstyledButton>
+            <div key={l.href}>
+              <UnstyledButton
+                component={Link}
+                href={l.href}
+                onClick={close}
+                fz="lg"
+                fw={isActive(l.href) ? 600 : 500}
+                c={isActive(l.href) ? "brand.7" : "dark"}
+              >
+                {l.label}
+              </UnstyledButton>
+              {l.dropdown && (
+                <Stack gap="xs" mt="sm" ml="xs">
+                  {catalogSideItems.map((c) => (
+                    <UnstyledButton
+                      key={c.slug}
+                      component={Link}
+                      href={`/catalog?cat=${c.slug}`}
+                      onClick={close}
+                      c="dimmed"
+                      fz="sm"
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 8,
+                      }}
+                    >
+                      <c.icon size={18} stroke={1.7} />
+                      {c.label}
+                    </UnstyledButton>
+                  ))}
+                </Stack>
+              )}
+            </div>
           ))}
           <Button
             component="a"

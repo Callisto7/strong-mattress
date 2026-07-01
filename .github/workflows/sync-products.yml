@@ -1,0 +1,53 @@
+name: Sync products from supplier
+
+# Периодически тянет каталог поставщика и, если что-то изменилось,
+# коммитит обновлённые данные. Пуш в master запускает деплой (deploy-pages.yml).
+#
+# Настройка (Settings → Secrets and variables → Actions):
+#   Variable  SUPPLIER_FEED_URL  — ссылка на YML-фид поставщика, ИЛИ
+#   Variable  SUPPLIER_PAGES     — URL страниц каталога через запятую.
+
+on:
+  schedule:
+    - cron: '0 4 * * *' # каждый день в 04:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  actions: write # чтобы запустить деплой после коммита
+
+concurrency:
+  group: sync-products
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Import catalog
+        env:
+          SUPPLIER_FEED_URL: ${{ vars.SUPPLIER_FEED_URL }}
+          SUPPLIER_PAGES: ${{ vars.SUPPLIER_PAGES }}
+        run: node scripts/import-products.mjs
+
+      - name: Commit and deploy if changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [[ -n "$(git status --porcelain components/products.data.json public/synced)" ]]; then
+            git config user.name  "catalog-sync[bot]"
+            git config user.email "catalog-sync@users.noreply.github.com"
+            git add components/products.data.json public/synced
+            git commit -m "chore: sync catalog from supplier"
+            git push
+            # Пуш ботом не запускает другие workflow — дёргаем деплой вручную.
+            gh workflow run deploy-pages.yml --ref "${GITHUB_REF_NAME}"
+          else
+            echo "Изменений нет — пропускаю."
+          fi

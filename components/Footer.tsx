@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 import {
   ActionIcon,
   Anchor,
@@ -6,68 +6,63 @@ import {
   Container,
   Divider,
   Group,
+  Image,
   SimpleGrid,
   Stack,
   Text,
-} from '@mantine/core';
+} from "@mantine/core";
 import {
-  IconBrandFacebook,
   IconBrandInstagram,
-  IconBrandX,
-  IconBrandLinkedin,
-  IconBrandYoutube,
-} from '@tabler/icons-react';
-import { Logo } from './Logo';
+  IconBrandTelegram,
+  IconBrandWhatsapp,
+} from "@tabler/icons-react";
 
 const col1 = [
-  { label: 'О нас', href: '/about' },
-  { label: 'Каталог', href: '/catalog' },
-  { label: 'Товар', href: '/product' },
-  { label: 'Контакты', href: '/contacts' },
-  { label: 'Главная', href: '/' },
+  { label: "Главная", href: "/" },
+  { label: "О нас", href: "/about" },
+  { label: "Каталог", href: "/catalog" },
+  { label: "Контакты", href: "/contacts" },
 ];
 
 const col2 = [
-  { label: 'Доставка', href: '#' },
-  { label: 'Гарантия', href: '#' },
-  { label: 'Возврат', href: '#' },
-  { label: 'Поддержка', href: '#' },
-  { label: 'Блог', href: '#' },
+  { label: "Доставка", href: "#" },
+  { label: "Гарантия", href: "#" },
+  { label: "Возврат", href: "#" },
 ];
 
-const socials = [
-  IconBrandFacebook,
-  IconBrandInstagram,
-  IconBrandX,
-  IconBrandLinkedin,
-  IconBrandYoutube,
-];
+const socials = [IconBrandTelegram, IconBrandWhatsapp, IconBrandInstagram];
 
 export function Footer() {
   return (
-    <Box component="footer" pt={64} pb={32} style={{ background: '#fff' }}>
+    <Box component="footer" pt={64} pb={32} style={{ background: "#fff" }}>
       <Container>
         <SimpleGrid cols={{ base: 1, sm: 2 }} spacing={48}>
           <Stack gap="lg">
-            <Logo size={28} />
+            <Link href="/" style={{ width: 200 }}>
+              <Image src="/logo.png" width={200} />
+            </Link>
             <div>
               <Text fw={700} fz="sm">
                 Адрес
               </Text>
               <Text fz="sm" c="dimmed">
-                Уровень 1, 12 Sample St, Sydney NSW 2000
+                Республика Дагестан, г. Хасавюрт, ул. Грозненская 115
               </Text>
             </div>
             <div>
               <Text fw={700} fz="sm">
                 Контакт
               </Text>
-              <Anchor href="tel:18001234567" fz="sm" underline="always">
-                1800 123 4567
+              <Anchor href="tel:8 800 555 35 35" fz="sm" underline="always">
+                8 800 555 35 35
               </Anchor>
               <br />
-              <Anchor href="mailto:info@strong.com" fz="sm" underline="always">
-                info@strong.com
+              <Anchor
+                href="mailto:info@citymattress.com"
+                fz="sm"
+                underline="always"
+              >
+                info@citymattress.com
               </Anchor>
             </div>
             <Group gap="sm">
@@ -85,7 +80,7 @@ export function Footer() {
             </Group>
           </Stack>
 
-          <SimpleGrid cols={2} spacing={24} style={{ alignSelf: 'start' }}>
+          <SimpleGrid cols={2} spacing={24} style={{ alignSelf: "start" }}>
             <Stack gap="sm">
               {col1.map((l) => (
                 <Anchor
@@ -114,7 +109,7 @@ export function Footer() {
 
         <Group justify="space-between" gap="md">
           <Text fz="sm" c="dimmed">
-            © 2025 Strong. Все права защищены.
+            © 2026 City Mattress. Все права защищены.
           </Text>
           <Group gap="lg">
             <Anchor href="#" fz="sm" c="dimmed" underline="always">
@@ -122,9 +117,6 @@ export function Footer() {
             </Anchor>
             <Anchor href="#" fz="sm" c="dimmed" underline="always">
               Условия использования
-            </Anchor>
-            <Anchor href="#" fz="sm" c="dimmed" underline="always">
-              Настройки cookies
             </Anchor>
           </Group>
         </Group>

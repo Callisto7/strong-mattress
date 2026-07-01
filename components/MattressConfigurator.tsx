@@ -75,7 +75,7 @@ export function MattressConfigurator() {
         <Tagline c="dark">Конструктор</Tagline>
         <Title order={2}>Подберите матрас за минуту</Title>
         <Text c="dimmed" style={{ lineHeight: 1.6 }}>
-          Укажите параметры — покажем подходящую модель Strong из каталога
+          Укажите параметры — покажем подходящую модель City Mattress из каталога
         </Text>
       </Stack>
 
@@ -201,7 +201,7 @@ export function MattressConfigurator() {
                   : `Подходящих моделей: ${matchCount}`}
               </Text>
               <Box mt="xs">
-                <GlassButton href="/product" overLight ariaLabel="Открыть матрас">
+                <GlassButton href={`/product/${best.id}`} overLight ariaLabel="Открыть матрас">
                   Подробнее
                 </GlassButton>
               </Box>
