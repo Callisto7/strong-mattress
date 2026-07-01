@@ -49,13 +49,8 @@ const services = [
   },
   {
     icon: IconMapPin,
-    title: 'Доставка по России',
+    title: 'Доставка по Хасавюрту',
     text: 'Матрас приедет в течение недели, упакованным надёжно. Мы работаем с проверенными курьерами, которые знают своё дело.',
-  },
-  {
-    icon: IconTrash,
-    title: 'Вывоз старого',
-    text: 'Заберём ваш старый матрас при доставке нового. Никаких хлопот, никаких вопросов, просто чистота в доме.',
   },
 ];
 
@@ -212,9 +207,6 @@ export default function HomePage() {
                   Позвоночник получает правильную поддержку всю долгую ночь.
                 </Text>
                 <Group mt="xs">
-                  <Button variant="outline" color="gray.0" c="white" size="sm">
-                    Узнать
-                  </Button>
                   <Button
                     variant="subtle"
                     color="gray.0"
@@ -380,53 +372,7 @@ export default function HomePage() {
         </Container>
       </Box>
 
-      {/* CTA БАННЕР */}
-      <Container component="section" py={{ base: 56, md: 96 }}>
-        <Card radius="lg" withBorder p={0} style={{ overflow: 'hidden' }}>
-          <Grid gutter={0}>
-            <GridCol span={{ base: 12, md: 7 }}>
-              <Stack
-                p={{ base: 'xl', md: 48 }}
-                gap="md"
-                h="100%"
-                justify="center"
-              >
-                <Title order={2}>Найдите свой матрас в каталоге</Title>
-                <Text c="dimmed" style={{ lineHeight: 1.6 }}>
-                  Выберите размер и жёсткость, которые подходят именно вам
-                </Text>
-                <Group align="flex-end" gap="sm" wrap="nowrap">
-                  <TextInput
-                    placeholder="Введите ваш адрес электронной почты"
-                    style={{ flex: 1 }}
-                    size="md"
-                    aria-label="Электронная почта"
-                  />
-                  <Button size="md" component={Link} href="/catalog">
-                    Перейти
-                  </Button>
-                </Group>
-                <Text fz="xs" c="dimmed">
-                  Нажимая кнопку, вы соглашаетесь с условиями использования сайта
-                </Text>
-              </Stack>
-            </GridCol>
-            <GridCol span={{ base: 12, md: 5 }}>
-              <Box
-                style={{ position: 'relative', minHeight: 280, height: '100%' }}
-              >
-                <Image
-                  src="/images/cta-couch.jpg"
-                  alt="Консультация по выбору матраса"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 40vw"
-                  style={{ objectFit: 'cover' }}
-                />
-              </Box>
-            </GridCol>
-          </Grid>
-        </Card>
-      </Container>
+
 
       {/* FAQ */}
       <Box component="section" className="section-muted">
@@ -451,21 +397,6 @@ export default function HomePage() {
               </Accordion>
             ))}
           </SimpleGrid>
-
-          <Stack align="center" gap="md" mt={64}>
-            <Title order={3} ta="center">
-              Остались вопросы?
-            </Title>
-            <Text c="dimmed">Остались вопросы о матрасах?</Text>
-            <Button
-              component={Link}
-              href="/contacts"
-              variant="outline"
-              color="dark"
-            >
-              Контакты
-            </Button>
-          </Stack>
         </Container>
       </Box>
 

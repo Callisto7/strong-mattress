@@ -206,45 +206,6 @@ export default function AboutPage() {
           </Grid>
         </Container>
       </Box>
-
-      {/* CTA */}
-      <Container py={{ base: 56, md: 96 }}>
-        <Card radius="lg" withBorder p={0} style={{ overflow: 'hidden' }}>
-          <Grid gutter={0}>
-            <GridCol span={{ base: 12, md: 7 }}>
-              <Stack p={{ base: 'xl', md: 48 }} gap="md" justify="center" h="100%">
-                <Title order={2}>Найдите свой идеальный матрас</Title>
-                <Text c="dimmed">
-                  Посмотрите полный каталог или свяжитесь с нами для персональной
-                  консультации
-                </Text>
-                <Group align="flex-end" gap="sm" wrap="nowrap">
-                  <TextInput placeholder="Введите ваш email" style={{ flex: 1 }} size="md" />
-                  <Button size="md">Отправить</Button>
-                </Group>
-                <Text fz="xs" c="dimmed">
-                  Нажимая кнопку, вы соглашаетесь с нашими условиями
-                  использования
-                </Text>
-              </Stack>
-            </GridCol>
-            <GridCol span={{ base: 12, md: 5 }}>
-              <Box
-                className="zoom-img"
-                style={{ position: 'relative', minHeight: 260, height: '100%' }}
-              >
-                <Image
-                  src="/images/mattress-4.jpg"
-                  alt="Матрас Strong"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 40vw"
-                  style={{ objectFit: 'cover' }}
-                />
-              </Box>
-            </GridCol>
-          </Grid>
-        </Card>
-      </Container>
     </>
   );
 }
