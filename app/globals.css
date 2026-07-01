@@ -40,25 +40,76 @@ a {
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
-/* Fallback pill shown before the LiquidGlass component hydrates (GlassButton) */
+/* Liquid-glass pill button (GlassButton) */
 .liquid-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 13px 28px;
+  padding: 13px 30px;
   border-radius: 999px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  line-height: 1;
+  white-space: nowrap;
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
   background: rgba(16, 44, 32, 0.42);
-  -webkit-backdrop-filter: blur(12px) saturate(160%);
-  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(170%);
+  backdrop-filter: blur(14px) saturate(170%);
   border: 1px solid rgba(255, 255, 255, 0.28);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.12),
     0 10px 30px -12px rgba(8, 30, 20, 0.5);
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.liquid-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(16, 44, 32, 0.55);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.14),
+    0 16px 38px -14px rgba(8, 30, 20, 0.6);
+}
+
+.liquid-btn:active {
+  transform: translateY(0);
+}
+
+.liquid-btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.7);
+  outline-offset: 2px;
 }
 
 .liquid-btn[data-over-light='true'] {
+  color: #0c2c1d;
   background: rgba(255, 255, 255, 0.5);
   border-color: rgba(0, 0, 0, 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 10px 30px -14px rgba(8, 30, 20, 0.35);
+}
+
+.liquid-btn[data-over-light='true']:hover {
+  background: rgba(255, 255, 255, 0.68);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 16px 38px -16px rgba(8, 30, 20, 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .liquid-btn {
+    transition: background 0.2s ease;
+  }
+  .liquid-btn:hover {
+    transform: none;
+  }
 }
 
 /* Hero with full-bleed background image */

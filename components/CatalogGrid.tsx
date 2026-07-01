@@ -187,19 +187,10 @@ export function CatalogGrid() {
                       </Text>
                       <Group gap="xs" grow>
                         <Button
-                          variant={selected ? 'filled' : 'light'}
-                          color={selected ? 'brand.7' : 'gray'}
-                          radius="md"
-                          onClick={() => toggleCompare(p.id)}
-                          leftSection={<IconArrowsDiff size={16} />}
-                        >
-                          {selected ? 'В сравнении' : 'Сравнить'}
-                        </Button>
-                        <Button
                           component={Link}
                           href="/product"
-                          variant="light"
-                          color="dark"
+                          variant="filled"
+                          color="brand.7"
                           radius="md"
                         >
                           Подробнее
